@@ -23,30 +23,26 @@ import java.util.Map;
 public class GlobalExceptionHandler {
     /**
      * 捕获 自定义的DemoException
-     *
-     * @param request
-     * @param e
-     * @return
      */
     @ExceptionHandler(GlobalException.class)
-    public BaseResult GlobalExceptionHandler(HttpServletRequest request, GlobalException e) {
+    public BaseResult<Object> globalExceptionHandler(GlobalException e) {
         log.error("GlobalException：{}", e.getMessage());
         return BaseResult.error(e.getCode(), e.getMessage());
     }
 
     /**
      * jsr303 参数校验异常
-     *
-     * @param e
-     * @return
      */
     @ExceptionHandler(BindException.class)
-    public BaseResult validExceptionHandler(BindException e) {
+    public BaseResult<Object> validExceptionHandler(BindException e) {
         FieldError fieldError = e.getBindingResult().getFieldError();
-        assert fieldError != null;
-        log.error("参数校验异常:{}({})", fieldError.getDefaultMessage(), fieldError.getField());
-        // 将错误的参数的详细信息封装到统一的返回实体
-        return BaseResult.error(-1, fieldError.getDefaultMessage());
+        if(fieldError!=null){
+            log.error("参数校验异常:{}({})", fieldError.getDefaultMessage(), fieldError.getField());
+            // 将错误的参数的详细信息封装到统一的返回实体
+            return BaseResult.error(-1, fieldError.getDefaultMessage());
+        }
+        return null;
+
     }
 
 }
