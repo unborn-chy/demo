@@ -1,12 +1,12 @@
 package com.chy.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.chy.dto.UserDTO;
-import com.chy.entity.User;
+import com.chy.dto.UserDto;
+import com.chy.pojo.User;
 import com.chy.service.UserService;
-import com.chy.to.PageQueryTO;
-import com.chy.utils.PageResult;
-import com.chy.utils.Result;
+import com.chy.to.PageQueryTo;
+import com.chy.to.PageResult;
+import com.chy.to.Result;
 import com.chy.valid.Add;
 import com.chy.valid.Update;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +45,7 @@ public class UserController {
      * 添加用户
      */
     @PostMapping("/addUser")
-    public Result<String> addUser(@Validated(Add.class) @RequestBody UserDTO userDTO){
+    public Result<String> addUser(@Validated(Add.class) @RequestBody UserDto userDTO){
         log.info("userDto:{}",userDTO);
         userService.save(userDTO);
         return Result.success();
@@ -55,7 +55,7 @@ public class UserController {
      * 修改用户
      */
     @PostMapping("/updateUser")
-    public Result<String> updateUser(@Validated(Update.class) @RequestBody UserDTO userDTO){
+    public Result<String> updateUser(@Validated(Update.class) @RequestBody UserDto userDTO){
         log.info("userDto:{}",userDTO);
         userService.update(userDTO);
         return Result.success();
@@ -77,7 +77,7 @@ public class UserController {
      */
 
     @GetMapping("/listUser")
-    public PageResult<User> listUser(PageQueryTO pageQueryTO){
+    public PageResult<User> listUser(PageQueryTo pageQueryTO){
 
         log.info("pageQueryTO:{}",pageQueryTO);
         Page<User> page = userService.listUser(pageQueryTO);
@@ -85,7 +85,7 @@ public class UserController {
     }
 
     @PostMapping("/updateUserName")
-    public Result<String> updateUserName( @Validated(Update.class) UserDTO userDTO){
+    public Result<String> updateUserName( @Validated(Update.class) UserDto userDTO){
         log.info("userDto:{}",userDTO);
         return Result.success();
     }

@@ -2,7 +2,7 @@ package com.chy.handler;
 
 import com.chy.enums.BaseErrorInterface;
 import com.chy.enums.CommonEnum;
-import com.chy.utils.Result;
+import com.chy.to.Result;
 import com.chy.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -10,6 +10,7 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -37,7 +38,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BizException.class)
     public Result<BaseErrorInterface> handleBizException(BizException bizException) {
-        log.warn("业务异常:{}", bizException.getMessage(), bizException);
+        log.warn("业务异常:{}", bizException.getError().getMessage(), bizException);
         return Result.error(bizException.getError());
     }
 
@@ -59,10 +60,6 @@ public class GlobalExceptionHandler {
 
     /**
      * ConstraintViolationException异常（散装GET,POST 参数校验）
-     *
-     * @param
-     * @return
-     * @see
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public Result<CommonEnum> handleConstraintViolationException(ConstraintViolationException e) {
@@ -72,9 +69,6 @@ public class GlobalExceptionHandler {
 
     /**
      * BindException异常（GET,POST  DTO校验）
-     *
-     * @param e
-     * @return
      */
     @ExceptionHandler(BindException.class)
     public Result<Map<String, String>> validationBindException(BindException e) {
@@ -127,8 +121,6 @@ public class GlobalExceptionHandler {
     }
 
 
-
-
     /**
      * 运行时异常 RuntimeException的子类也会被捕获
      */
@@ -137,4 +129,5 @@ public class GlobalExceptionHandler {
 //        log.warn("运行时异常: {}", e.getMessage(), e);
 //        return Result.error(CommonEnum.INTERNAL_SERVER_ERROR);
 //    }
+
 }

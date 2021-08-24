@@ -11,11 +11,10 @@ import java.util.Map;
 class DemoApplicationTests {
 
     @Test
-    void contextLoads() {
-        Map<Integer,String> map = new HashMap<>();
-        map.put(1,"a");
-        String s = map.get(2);
-        System.out.println("s:" + s);
+    public void contextLoads() {
+        String str1 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjI5ODE5MTA4LCJ1c2VybmFtZSI6ImNoeSJ9.xFcGaHqmPpJBt5FM2x0CQicKYlts-CF2j4FiLq89yr8";
+        String str2 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjI5ODE5MTA4LCJ1c2VybmFtZSI6ImNoeSJ9.xFcGaHqmPpJBt5FM2x0CQicKYlts-CF2j4FiLq89yr8";
+        System.out.println(str1.equals(str2));
     }
 
 }

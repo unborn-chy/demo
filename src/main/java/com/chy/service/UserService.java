@@ -1,9 +1,9 @@
 package com.chy.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.chy.dto.UserDTO;
-import com.chy.entity.User;
-import com.chy.to.PageQueryTO;
+import com.chy.dto.UserDto;
+import com.chy.pojo.User;
+import com.chy.to.PageQueryTo;
 
 import java.util.List;
 
@@ -14,9 +14,9 @@ import java.util.List;
 public interface UserService {
     List<User> getAll();
 
-    void save(UserDTO userDTO);
+    void save(UserDto userDTO);
 
-    void update(UserDTO userDTO);
+    void update(UserDto userDTO);
 
     /**
      * 批量添加用户
@@ -24,5 +24,5 @@ public interface UserService {
     void batchSaveUser();
 
 
-     Page<User> listUser(PageQueryTO pageQueryTO);
+     Page<User> listUser(PageQueryTo pageQueryTO);
 }

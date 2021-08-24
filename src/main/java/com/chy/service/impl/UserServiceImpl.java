@@ -1,20 +1,15 @@
 package com.chy.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.chy.dto.UserDTO;
-import com.chy.entity.User;
-import com.chy.enums.CommonEnum;
+import com.chy.dto.UserDto;
+import com.chy.pojo.User;
 import com.chy.enums.UserTypeEnum;
-import com.chy.exception.BizException;
 import com.chy.mapper.UserMapper;
 import com.chy.service.UserService;
-import com.chy.to.PageQueryTO;
+import com.chy.to.PageQueryTo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindException;
 
 import java.util.List;
 
@@ -38,7 +33,7 @@ public class UserServiceImpl implements UserService {
      * @param userDTO
      */
     @Override
-    public void save(UserDTO userDTO) {
+    public void save(UserDto userDTO) {
         User user = new User();
         // 判断用户类型是否合法
         UserTypeEnum.getUserTypeEnumByCode(userDTO.getUserType());
@@ -47,7 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(UserDTO userDTO) {
+    public void update(UserDto userDTO) {
         User user = new User();
         // 判断用户类型是否合法
         UserTypeEnum.getUserTypeEnumByCode(userDTO.getUserType());
@@ -72,7 +67,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> listUser(PageQueryTO pageQueryTO) {
+    public Page<User> listUser(PageQueryTo pageQueryTO) {
         Page<User> page = new Page<>();
         page.setCurrent(pageQueryTO.getPage());
         page.setSize(pageQueryTO.getPageSize());

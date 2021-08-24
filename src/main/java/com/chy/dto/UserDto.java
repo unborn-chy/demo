@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserDto {
     @NotNull(message = "id不能为空",groups = {Update.class})
     private Long id;
     @NotBlank(message = "姓名不能为空",groups = {Add.class,Update.class})

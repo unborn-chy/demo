@@ -1,7 +1,7 @@
 package com.chy.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.chy.entity.User;
+import com.chy.pojo.User;
 
 /**
  * @author chy

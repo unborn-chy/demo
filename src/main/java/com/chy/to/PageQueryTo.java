@@ -7,7 +7,7 @@ import lombok.Data;
  * @since 2021-03-22 19:50
  */
 @Data
-public class PageQueryTO extends BaseTO {
+public class PageQueryTo extends BaseTo {
     private static final long serialVersionUID = -1319283881967144831L;
 
     private static final Integer DEFAULT_PAGE = 1;

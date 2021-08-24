@@ -7,7 +7,10 @@ public enum UserErrorEnum implements BaseErrorInterface{
     /**
      *
      */
-    USER_TYPE_ERROR(1000, "用户类型有误");
+    USER_TYPE_ERROR(1000, "用户类型有误"),
+    VALIDATE_USER_NAME_PASSWORD_ERROR(404, "账号或者错误"),
+    USER_AUTH_TIME_OUT_ERROR(404, "用户身份过期,请重新登录"),
+    ;
     /**
      * 错误码
      */
