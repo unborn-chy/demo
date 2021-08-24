@@ -5,8 +5,10 @@ import com.chy.enums.CommonEnum;
 import com.chy.utils.Result;
 import com.chy.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 
 /**
  * 全局统一异常处理
+ *
  * @author chy
  * @since 2021-03-21 20:58
  */
@@ -38,17 +41,6 @@ public class GlobalExceptionHandler {
         return Result.error(bizException.getError());
     }
 
-    /**
-     * 运行时异常
-     *
-     * @param e
-     * @return
-     */
-    @ExceptionHandler(RuntimeException.class)
-    public Result<BaseErrorInterface> handleRunTimeException(RuntimeException e) {
-        log.warn("运行时异常: {}", e.getMessage(), e);
-        return Result.error(CommonEnum.INTERNAL_SERVER_ERROR);
-    }
 
 //    /**
 //     * ValidatorUtils校验异常
@@ -66,7 +58,7 @@ public class GlobalExceptionHandler {
 //    }
 
     /**
-     * ConstraintViolationException异常（散装GET参数校验）
+     * ConstraintViolationException异常（散装GET,POST 参数校验）
      *
      * @param
      * @return
@@ -79,7 +71,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * BindException异常（GET DTO校验）
+     * BindException异常（GET,POST  DTO校验）
      *
      * @param e
      * @return
@@ -110,4 +102,39 @@ public class GlobalExceptionHandler {
         return Result.error(CommonEnum.ERROR_PARAM, message);
     }
 
+    /**
+     * 需要json传入的form post表单
+     * HttpMessageNotReadableException
+     */
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public Result<Map<String, String>> validationHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        log.error("参数错误: {}", e);
+        return Result.error(CommonEnum.ERROR_PARAM);
+    }
+
+    /**
+     * 需要json 错误传入form-data
+     * HttpMediaTypeNotSupportedException
+     * @param e
+     * @return
+     */
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public Result<Map<String, String>> validationHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+        log.error("参数错误: {}", e);
+        return Result.error(CommonEnum.ERROR_PARAM);
+    }
+
+
+
+
+    /**
+     * 运行时异常 RuntimeException的子类也会被捕获
+     */
+//    @ExceptionHandler(RuntimeException.class)
+//    public Result<BaseErrorInterface> handleRunTimeException(RuntimeException e) {
+//        log.warn("运行时异常: {}", e.getMessage(), e);
+//        return Result.error(CommonEnum.INTERNAL_SERVER_ERROR);
+//    }
 }

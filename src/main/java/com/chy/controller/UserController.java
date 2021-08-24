@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
  * @author chy
  * @since 2021-03-21 21:16
  */
+
+@Validated
 @RestController
 @Slf4j
 public class UserController {
@@ -43,7 +46,7 @@ public class UserController {
      */
     @PostMapping("/addUser")
     public Result<String> addUser(@Validated(Add.class) @RequestBody UserDTO userDTO){
-        log.error("userDto:{}",userDTO);
+        log.info("userDto:{}",userDTO);
         userService.save(userDTO);
         return Result.success();
 
@@ -53,7 +56,7 @@ public class UserController {
      */
     @PostMapping("/updateUser")
     public Result<String> updateUser(@Validated(Update.class) @RequestBody UserDTO userDTO){
-        log.error("userDto:{}",userDTO);
+        log.info("userDto:{}",userDTO);
         userService.update(userDTO);
         return Result.success();
     }
@@ -76,10 +79,26 @@ public class UserController {
     @GetMapping("/listUser")
     public PageResult<User> listUser(PageQueryTO pageQueryTO){
 
-        log.error("pageQueryTO:{}",pageQueryTO);
+        log.info("pageQueryTO:{}",pageQueryTO);
         Page<User> page = userService.listUser(pageQueryTO);
         return PageResult.success(page);
     }
 
+    @PostMapping("/updateUserName")
+    public Result<String> updateUserName( @Validated(Update.class) UserDTO userDTO){
+        log.info("userDto:{}",userDTO);
+        return Result.success();
+    }
+
+    /**
+     * 散装 验证
+     * @param name
+     * @return
+     */
+    @PostMapping("/updateUserSeparate")
+    public Result<String> updateUserSeparate(@NotNull(message = "name 不能为空啊") String name){
+        log.info("name:{}",name);
+        return Result.success();
+    }
 
 }
